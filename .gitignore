@@ -1,0 +1,7 @@
+.bundle
+*.db
+wordlist.txt*
+!wordlist.txt.example
+hashcat.pot
+eula.accepted
+results.txt

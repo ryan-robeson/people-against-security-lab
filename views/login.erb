@@ -1,0 +1,24 @@
+<%= page_header("Login") %>
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <% if flash.has?(:error) %>
+      <div class="alert alert-box alert-danger">
+        <p>
+        <span class="glyphicon glpyhicon-exclamation-sign"></span>
+        <%= flash[:error] %>
+        </p>
+      </div>
+    <% end %>
+    <form id="login" method="post" action="/login" role="form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" id="email" placeholder="Email Address" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+      </div>
+      <button type="submit" class="btn btn-default">Login</button>
+    </form>
+  </div>
+</div>

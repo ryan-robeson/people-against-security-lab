@@ -1,0 +1,71 @@
+<%= page_header "Manage Users" %>
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <% if flash.has?(:success) %>
+      <div class="alert alert-box alert-success">
+        <p><%= flash[:success] %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <% if flash.has?(:error) %>
+      <div class="alert alert-box alert-danger">
+        <p>
+        <%= flash[:error] %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <table class="table table-striped">
+      <thead>
+        <th>Display Name</th>
+        <th>Email</th>
+        <th>Admin?</th>
+        <th>Banned?</th>
+        <th>Manage</th>
+      </thead>
+      <% @users.each do |u| %>
+        <tr>
+          <td><%= u[1] %></td>
+          <td><%= u[2] %></td>
+          <td>
+            <% if u[3] == 1 %>
+              <span class="text-success glyphicon glyphicon-ok-circle"></span>
+            <% else %>
+              <span class="glyphicon glyphicon-minus"></span>
+            <% end %>
+          </td>
+          <td>
+            <% if u[4] == 1 %>
+              <span class="text-danger glyphicon glyphicon-ban-circle"></span>
+            <% else %>
+              <span class="class glyphicon glyphicon-minus"></span>
+            <% end %>
+          </td>
+          <td class="col-xs-2">
+            <form id="manage-<%= u[0] %>" class="btn-group btn-group-justified" method="post">
+              <input type="hidden" name="id" value="<%= u[0] %>" />
+              <div class="btn-group">
+                <button class="btn <%= is_user_admin?(u[0]) ? 'btn-default' : 'btn-success' %>" type="submit" formaction="/admin/manage/users/toggle_admin">
+                  <%= is_user_admin?(u[0]) ? 'Demote' : 'Promote' %>
+                </button>
+              </div>
+              <div class="btn-group">
+                <button class="btn <%= is_user_banned?(u[0]) ? 'btn-default' : 'btn-danger' %>" type="submit" formaction="/admin/manage/users/toggle_ban">
+                  <%= is_user_banned?(u[0]) ? 'Unban' : 'Ban' %>
+                </button>
+              </div>
+            </form>
+          </td>
+        </tr>
+      <% end %>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>

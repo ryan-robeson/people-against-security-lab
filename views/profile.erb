@@ -1,0 +1,110 @@
+<%= page_header("Profile") %>
+
+<% if flash.has?(:success) %>
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div class="alert alert-box alert-success">
+        <%= flash[:success] %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="row">
+  <div class="col-md-2">
+    <section class="user-settings">
+    <div class="row">
+      <div class="col-xs-12">
+        <dl>
+          <dt>Name</dt>
+          <dl><%= @user[1] %></dl>
+          <dt>Email</dt>
+          <dl><%= @user[2] %></dl>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <p>
+        <a href="#">Account Settings</a>
+        </p>
+        <p>
+        <a href="/profile/reset_password">Reset Password</a>
+        </p>
+        <p><a href="#">Inbox <span class="badge">0</span></a></p>
+      </div>
+    </div>
+    </section>
+  </div>
+  <div class="col-md-offset-1 col-md-6">
+    <section class="timeline">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="alert alert-box alert-info">
+          <p class="lead">PAS is better with others!</p>
+          <p>We are happy to import your contacts from <%= @user[2] %>.</p>
+          <p><a href="#" class="btn btn-info btn-md">Sweet! Make it happen</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 style="margin-top: 0">
+          What's happening?
+        </h2>
+        <form role="form">
+          <div class="form-group">
+            <textarea class="form-control" name="status-update" rows="2" placeholder="Tell us how productive you are these days"></textarea>
+          </div>
+          <div class="text-right">
+            <button class="btn btn-success" type="submit" value="post" onclick="event.preventDefault()">Post!</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Welcome to the community!</h3>
+          </div>
+          <div class="panel-body">
+            <p>
+            We can't wait to hear from you! Creating your account was the first step into a new online family. Now share your thoughts so we can all get to know each other.
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" style="width: 35%">
+                Step 1 <span class="glyphicon glyphicon-ok"></span>
+              </div>
+            </div>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+  </div>
+  <div class="col-md-3">
+    <section class="people-you-may-know">
+    <row>
+    <div class="col-xs-12">
+      <h4 class="text-muted" style="margin-top: 0">
+        People you may know
+      </h4>
+      <dl>
+        <% @people_you_may_know.each do |p| %>
+          <dt>
+          <% if is_user_banned?(p[0]) %>
+            <%= p[1] %>
+            <span class="label label-danger">Banned</span>
+          <% else %>
+            <a href="#"><%= p[1] %></a>
+          <% end %>
+          </dt>
+          <dd><%= p[2] %></dt>
+        <% end %>
+      </dl>
+    </div>
+    </row>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<%= page_header("Register") %>
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <% if flash.has?(:error) %>
+      <div class="alert alert-box alert-danger">
+        <p>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <%= flash[:error] %>
+        </p>
+      </div>
+    <% end %>
+    <form id="register" method="post" action="/register" role="form">
+      <div class="form-group">
+        <label for="display_name">Display Name</label>
+        <input type="text" class="form-control" name="display_name" id="display_name" placeholder="Display Name" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" id="email" placeholder="Email Address" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+      </div>
+      <button type="submit" class="btn btn-default">Register</button>
+    </form>
+  </div>
+</div>
