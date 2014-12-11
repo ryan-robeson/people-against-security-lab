@@ -2,8 +2,6 @@ ENV['RACK_ENV'] = 'test'
 require "bundler/setup"
 require "minitest"
 require "minitest/reporters"
-require "rack/test"
-require "i18n"
 require "minitest/autorun"
 
 # Silence annoying message. Seemed to be introduced with Faker gem
@@ -19,26 +17,3 @@ class BacktraceFilter < Minitest::ExtensibleBacktraceFilter
 end
 
 Minitest::Reporters.use!(Minitest::Reporters::ProgressReporter.new, ENV, BacktraceFilter.default_filter)
-
-require 'people_against_security'
-
-# Add some convenience methods to the DB while testing.
-class Db
-  # Empty tables, but don't drop them
-  def clean!
-    @db.transaction do |db|
-      db.execute("delete from users;")
-    end
-  end
-
-  # Empty tables and call the seed method.
-  def reset!
-    clean!
-    @db.seed
-  end
-end
-
-def login!(email, password)
-  page.driver.post("/login", { email: email, password: password })
-  page.driver.browser.follow_redirect!
-end

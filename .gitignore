@@ -1,5 +1,7 @@
 .bundle
+Gemfile.lock
 *.db
+pkg/
 wordlist.txt*
 !wordlist.txt.example
 hashcat.pot

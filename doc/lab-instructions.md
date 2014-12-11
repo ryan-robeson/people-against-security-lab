@@ -7,41 +7,23 @@ Ryan Robeson
 
 * Kali Linux VM
 * pas.zip (obtained from instructor)
-* hashcat
+    * Constains
+        * people\_against\_security.gem
+        * setup.sh
+        * wordlist.txt
+* hashcat - hashcat.net/hashcat
 
 ### Goals:
 Penetrate the "People Against Security" Social Network and steal all of its users' passwords.
 
 ### Kali Setup (from terminal):
 
-* Update Kali
-    * `aptitude update && aptitude safe-upgrade`
-* Install development libraries (required to build ruby 2)
-    * `aptitude install libssl-dev ruby1.9.1-dev libsqlite3-dev`
-* Install Ruby 2
-    * `git clone https://github.com/sstephenson/rbenv.git ~/.rbenv`
-    * `echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile`
-    * `echo 'eval "$(rbenv init -)"' >> ~/.bash_profile`
-    * Close and reopen terminal
-    * `git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build`
-    * `rbenv install 2.1.0`
-* Configure Ruby 2 as the default
-    * For the current shell only if you're worried about it
-        * `rbenv shell 2.1.0`
-    * Or globally (within Kali) for convenience and the latest features
-        * `rbenv global 2.1.0`
-* Copy in pas.zip to Kali (the Home folder will work fine)
-    * `ls`
-        * Should show pas.zip
-    * `unzip pas.zip -d pas`
-    * `cd pas`
-    * Double check ruby version(need to be 2.1)
-        * `ruby -v`
-    * Install bundler ("Ruby Dependency Manager")
-        * `gem install bundler`
-    * `bundle install --without development test`
-    * `RACK_ENV=production bundle exec rackup`
-* PAS is now running on Kali. The port is displayed in the terminal.
+1. Copy pas.zip into your Kali VM
+1. `cd` to the directory of pas.zip
+1. `unzip -d pas -j pas.zip`
+1. `cd pas`
+1. `bash setup.sh`
+1. PAS is now running on Kali. The port is displayed in the terminal.
 
 Intro: You are a Black Hat hacker hired by Dr. Lehrfeld to exploit a popular social network (PAS).
 They are constantly accusing him of being crazy for wasting time improving security and have banned him from their website.
@@ -50,6 +32,7 @@ Your goal is to steal the passwords of its users from its database.
 This attack will take several steps to be successful.
 These exploits are all contained within the web application.
 Take screenshots after each step as proof of work.
+When you are finished, write a short summary of the exploits you found and how they could have been prevented.
 
 After setting up Kali, the site will be accessible inside your virtual machine.
 Open up a browser to http://localhost:PORT where PORT is the port displayed in the terminal.
@@ -62,7 +45,8 @@ View the page’s source.
 In some web applications, there are scripts for downloading files that take the filename as a parameter.
 Without proper validation, these scripts could be used to download files that hackers really don’t need to see, like the server side code behind a web page.
 Perhaps PAS has a similar vulnerability?
-See if you can gain access to PAS's source. Take a screenshot.
+See if you can gain access to PAS's source.
+Take a screenshot.
 
 Obtaining access to the application’s source code is not enough.
 You still need to retrieve those passwords.
@@ -82,8 +66,10 @@ Now that you have a copy of the database, you need to get those passwords.
 As you are exploring the database, you notice that PAS was smart enough to hash their passwords.
 However, they did not salt them.
 This will make cracking them much easier.
-You just need to find out what hashing algorithm LehrBook is using on its passwords.
-You also need to write a SQL statement to extract all of the email addresses and passwords to a text file in a format suitable for hashcat. "username:hash" tends to work well.
+You just need to find out what hashing algorithm PAS is using on its passwords.
+You also need to write a SQL statement to extract all of the email addresses and passwords to a text file in a format suitable for hashcat.
+"username:hash" tends to work well.
+Tip: sqlite3 can accept multiple commands like this: echo "select * from animals;\n select id from members;" | sqlite3 databaseName.db
 
 Now you just need to run hashcat with the appropriate options to specify your cleverly crafted wordlist which will speed up the attack, which hash PAS is using, and the file containing the email addresses and passwords.
 When it finishes, you will have successfully stolen all of the user account details from PAS.

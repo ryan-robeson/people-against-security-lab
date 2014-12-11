@@ -1,0 +1,18 @@
+module PeopleAgainstSecurity
+  module Pandoc
+    def self.run!(dir, out = $stdout)
+      files_generated = 0
+      
+      # This could probably be simplified, but it works according to experience and the tests.
+      Dir.chdir dir do
+        Pathname.glob(File.join(dir, "*.md")).each do |markdown_file|
+          %x{pandoc #{markdown_file} -o #{dir}/#{markdown_file.basename(markdown_file.extname)}.docx}
+          files_generated = files_generated + 1
+        end
+      end
+
+      out.puts "Successfully generated #{files_generated} files."
+    end
+  end
+end
+

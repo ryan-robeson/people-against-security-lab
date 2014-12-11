@@ -1,8 +1,7 @@
-require 'rubygems'
 require 'bundler'
 
-Bundler.require
+Bundler.setup
 
-require_relative "people_against_security"
+require_relative "lib/people_against_security"
 
 run Sinatra::Application

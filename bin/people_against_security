@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+ENV['RACK_ENV'] = "production"
+
+require "people_against_security"
+
+Sinatra::Application.run!

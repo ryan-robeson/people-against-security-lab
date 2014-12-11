@@ -1,4 +1,5 @@
 require_relative "../test_helper"
+require "capybara"
 
 Capybara.app = Sinatra::Application
 

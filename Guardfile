@@ -7,6 +7,9 @@
 ## Uncomment to clear the screen before every task
 # clearing :on
 
+require 'bundler/setup'
+require 'guard/guard'
+require 'guard/livereload'
 require 'guard/shotgun'
 require 'guard/minitest'
 
@@ -33,11 +36,11 @@ end
 
 group :server do
   guard :shotgun do
-    watch('people_against_security.rb') 
+    watch('lib/people_against_security.rb') 
   end
 
   guard 'livereload' do
-    watch(%r{views/.+\.(erb|haml|slim)$})
+    watch(%r{lib/views/.+\.(erb|haml|slim)$})
     #watch(%r{helpers/.+\.rb})
     watch(%r{public/.+\.(css|js|html)})
     #watch(%r{config/locales/.+\.yml})
@@ -46,12 +49,12 @@ group :server do
   end
 end
 
-guard :minitest do
+guard :minitest, include: ['lib'] do
   # with Minitest::Unit
   watch(%r{^test/(.*)\/?(.*)_test\.rb$})
   #watch(%r{^lib/(.*/)?([^/]+)\.rb$})     { |m| "test/#{m[1]}test_#{m[2]}.rb" }
   watch(%r{^test/test_helper\.rb$})      { 'test' }
-  watch("people_against_security.rb") { 'test' }
+  watch("lib/people_against_security.rb") { 'test' }
 
   # with Minitest::Spec
   # watch(%r{^spec/(.*)_spec\.rb$})

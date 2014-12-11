@@ -1,6 +1,12 @@
 require 'singleton'
 require 'forwardable'
 require 'tempfile'
+require 'sqlite3'
+require 'sinatra'
+require 'faker'
+require 'rack/flash'
+require 'sinatra/redirect_with_flash'
+require 'bundler'
 
 configure do
   enable :sessions
@@ -10,7 +16,8 @@ configure do
 end
 
 configure :development do
-  Bundler.require(:default, :development)
+  Bundler.setup(:default, :development)
+  require 'rack-livereload'
   use Rack::LiveReload
 end
 
@@ -187,12 +194,13 @@ class Db
   end
 
   def potential_passwords
-    File.readlines("wordlist.txt")
+    File.readlines(File.expand_path("../../wordlist.txt", __FILE__))
   end
 end
 
 configure :production do
-  Db.file_name = ".pas.db"
+  db_name = Dir::Tmpname.create(['pas', '.db']) {}
+  Db.file_name = db_name
   set :db, Db.instance
 end
 
