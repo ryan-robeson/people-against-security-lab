@@ -61,7 +61,7 @@ That is, to teach others about the importance of security throughout a web appli
 These files have the most impact on the non-technical aspects of this lab.
 They should be updated to reflect your situation and use case.
 Most modifications to these files are specific to your needs, and therefore would not benefit the project as a whole.
-If you have general improvements that would benefit other users of this project, see [Contributing](#contributing).
+If you have general improvements that would benefit other users of this project, see [Contributing](CONTRIBUTING.md).
 
 #### wordlist.txt
 
